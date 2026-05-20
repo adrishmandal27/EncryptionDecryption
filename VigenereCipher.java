@@ -12,14 +12,11 @@ public class VigenereCipher {
         str_in = sc.nextLine();
         System.out.println("Enter a key:");
         key = sc.nextLine();
-        str_out = new StringBuilder(str_in.length());
-    }
-    public void validity() {
         if(key.isEmpty()) {
             System.out.println("Key cannot be empty");
             System.exit(0);
         }
-        key = key.repeat((str_in.length()/key.length())+1).substring(0,str_in.length());    
+        str_out = new StringBuilder(str_in.length());
     }
     public void choose() {
         System.out.println("----MENU----");
@@ -39,17 +36,16 @@ public class VigenereCipher {
     }
     public void Encrypt() {
         for(int i = 0; i < str_in.length(); i++) 
-            str_out.append((char)((str_in.charAt(i)+key.charAt(i)-64)%95+32));    
+            str_out.append((char)((str_in.charAt(i)+key.charAt(i%key.length())-64)%95+32));    
        
     }
     public void Decrypt() {
         for(int i = 0; i < str_in.length(); i++)
-            str_out.append((char)((str_in.charAt(i)-key.charAt(i)+95)%95+32));    
+            str_out.append((char)((str_in.charAt(i)-key.charAt(i%key.length())+95)%95+32));    
     }
     public static void main(String[] args) {
         VigenereCipher obj = new VigenereCipher();
         obj.input();
-        obj.validity();
         obj.choose();
         obj.display();
     }
